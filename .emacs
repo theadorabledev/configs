@@ -16,7 +16,7 @@
  '(custom-enabled-themes (quote (tsdh-dark)))
  '(package-selected-packages
    (quote
-    (magit web-mode clang-format smarty-mode eyebrowse auto-complete grip-mode flymd markdown-preview-mode markdown-mode imenu-list flycheck org))))
+    (git-gutter csv-mode rjsx-mode prettier-js csv magit web-mode clang-format smarty-mode eyebrowse auto-complete grip-mode flymd markdown-preview-mode markdown-mode imenu-list flycheck org))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -29,7 +29,7 @@
   (require 'package)
   (add-to-list
    'package-archives
-   '("melpa" . "http://melpa.milkbox.net/packages/")
+   '("melpa" . "http://melpa.org/packages/")
    t))
 (package-initialize)
 ;; Show parens
@@ -52,11 +52,12 @@
 					;Everything starts with C-c C-w
 (eyebrowse-mode t)
 
-;;Keybindings help
+;; Keybindings help
 (defun binding-help()
   (interactive)
   (describe-mode `eyebrowse-mode)
   )
+
 ;; Color hex codes
 (defun hex-color ()
   (interactive)
@@ -91,12 +92,12 @@
   (add-hook 'sh-mode-hook m)
   (add-hook 'python-mode-hook m)
   (add-hook 'javascript-mode-hook m)
-  (add-hook 'mhtml-mode-hook m)   
+  (add-hook 'mhtml-mode-hook m)
+  (add-hook 'jsx-mode-hook m)   
   )
 
-;;Imenu stuff
+;; Imenu stuff
 (global-set-key (kbd "C-c i") `imenu-list-smart-toggle)
-
 
 ;; Finds all <p> instances and formats their contents to fit in the desired length.
 (defun format-paragraphs (col)
@@ -121,7 +122,7 @@
   (interactive)
   (load-file "~/.emacs")) 
 
-;;SSH function
+;; SSH functions
 (defun ssh (l)
   (interactive "MConnect to host: ")
   (dired (format "/ssh:%s:" l)))
@@ -149,7 +150,6 @@
       (all-completions "" obarray 'commandp))))))
 
 
-
 ;;Add linum to code
 (add-minor-mode-to-languages `(lambda () (linum-mode 1)))
 
@@ -171,13 +171,12 @@
 	  (hs-show-all))
     (toggle-selective-display column)))
 
-
 (global-set-key (kbd "C-c h") `hs-toggle-hiding)
-
 (global-set-key (kbd "C-c -") 'hs-hide-all)
 (global-set-key (kbd "C-c +") 'hs-show-all)
 (global-set-key (kbd "C-c ,") 'hs-hide-level)
 
+;; hs mhtml-forward functions
 (defun mhtml-forward (arg)
   (interactive "P")
   (pcase (get-text-property (point) 'mhtml-submode)
@@ -211,7 +210,7 @@
 ;; Desktops
 (require 'desktop)
 (desktop-save-mode 1)
-					;(desktop-save-in-desktop-dir)
+;(desktop-save-in-desktop-dir)
 (setq desktop-path (list "."))
 (defun my-desktop-save ()
   (interactive)
@@ -249,8 +248,6 @@ Also returns nil if pid is nil."
     (setq ad-return-value nil)))
 ;;; desktop-override-stale-locks.el ends here
 
-
-
 ;; Nice switch indentation
 
 (c-set-offset 'case-label '+)
@@ -272,7 +269,6 @@ Also returns nil if pid is nil."
 ;;    `(lambda ()
 ;;       (interactive)
 ;;       (eyebrowse-switch-to-window-config ,i))))
-
 
 (defvar my-menu-bar-menu (make-sparse-keymap "Mine"))
 (define-key global-map [menu-bar my-menu] (cons "Mine" my-menu-bar-menu))
